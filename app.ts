@@ -10,8 +10,9 @@ const TG_TARGET_CHAT_ID = retrieveEnv('TELEGRAM_TARGET_CHAT_ID');
 const TG_NOTIFY_INTERVAL = 3600000;
 
 const SYMBOL = retrieveEnv('SYMBOL');
-const LOWER_PRICE = parseFloat(retrieveEnv('LOWER_PRICE'));
-const UPPER_PRICE = parseFloat(retrieveEnv('UPPER_PRICE'));
+const LOWER_PRICE = parseFloat(process.argv[2]);
+const UPPER_PRICE = parseFloat(process.argv[3]);
+
 const PRICE_DECIMAL = parseFloat(retrieveEnv('PRICE_DECIMAL'));
 const NUMBER_OF_GRIDS = parseInt(retrieveEnv('NUMBER_OF_GRIDS'));
 const QUANTITY_PER_GRID = parseFloat(retrieveEnv('QUANTITY_PER_GRID'));
@@ -20,7 +21,7 @@ const QUANTITY_PER_GRID = parseFloat(retrieveEnv('QUANTITY_PER_GRID'));
 const connection = new Connection(BACKPACK_API_KEY, BACKPACK_API_SECRET);
 
 const bot_notify = () => {
-    if(TG_BOT_API_TOKEN == ''){
+    if (TG_BOT_API_TOKEN == '') {
         return;
     }
     const bot = new TgBot(TG_BOT_API_TOKEN, TG_TARGET_CHAT_ID);
@@ -29,9 +30,9 @@ const bot_notify = () => {
             const { lastPrice: lastPrice } = await connection.apiCall("ticker", { symbol: SYMBOL });
             const orders = await connection.apiCall("orderQueryAll", { symbol: SYMBOL });
 
-            let bid = orders.filter((order: any) => order['side']== 'Bid').length;
+            let bid = orders.filter((order: any) => order['side'] == 'Bid').length;
             let ask = orders.length - bid;
-            
+
             bot.notify(`
 <b>[${SYMBOL}] ${lastPrice}</b>
 Bid: ${bid} | Ask: ${ask}

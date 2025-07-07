@@ -1,13 +1,13 @@
 {
   "name": "backpack-grid-bot",
   "version": "1.0.0",
-  "main": "app.ts",
+  "main": "app_execute.ts",
   "description": "A Grid Trading Bot For Backpack Exchange.",
   "repository": "git@github.com:pordria/backpack-grid-bot.git",
   "license": "MIT",
   "author": "pordria <pordria@outlook.com>",
   "scripts": {
-    "start": "tsc && pm2 start dist/app.js --name grid-trading-bot --log gridbot.log",
+    "start": "tsc && pm2 start dist/app_execute.js --name grid-trading-bot --log gridbot.log",
     "dev": "tsc -w",
     "build": "tsc"
   },
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/node": "^20.11.25",
     "@types/qs": "^6.9.12",
-    "@types/ws": "^8.5.10"
+    "@types/ws": "^8.5.10",
+    "ts-node": "^10.9.2"
   }
 }
